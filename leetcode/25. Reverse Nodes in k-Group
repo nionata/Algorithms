@@ -1,0 +1,19 @@
+class Solution:
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        node, count = head, 0
+        while node and count < k:
+            count += 1
+            node = node.next
+        if count == k:
+            prev, curr = None, head
+            for i in range(k):
+                curr.next, curr, prev = prev, curr.next, curr
+            head.next = self.reverseKGroup(curr, k)
+            return prev    
+        else:
+            return head
