@@ -1,0 +1,14 @@
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        last, i, e = None, 0, len(nums)
+        while i < e:
+            if nums[i] == last:
+                del nums[i]
+                e -= 1
+            else:
+                last, i = nums[i], i+1
+        return e
