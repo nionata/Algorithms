@@ -1,0 +1,18 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        abcLower = "abcdefghijklmnopqrstuvwxyz0123456789"
+        s = s.lower()
+        l, r = 0, len(s) - 1
+        
+        while l <= r:
+            if s[l] not in abcLower: 
+                l = l + 1
+                continue
+            if s[r] not in abcLower:
+                r = r -1 
+                continue
+            if s[l] != s[r]:
+                return False
+            l = l + 1
+            r = r - 1
+        return True
