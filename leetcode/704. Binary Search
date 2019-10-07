@@ -1,0 +1,20 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        return self.binary(0, len(nums) - 1, nums, target)
+        
+        
+    def binary(self, l, r, nums, target):
+        if l > r: return -1
+        
+        c = l + (r - l) // 2
+        
+        if target == nums[c]: 
+            return c
+        elif target < nums[c]:
+            return self.binary(l, c - 1, nums, target)
+        else: 
+            return self.binary(c + 1, r, nums, target)
+        
+        
+    
+        
