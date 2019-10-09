@@ -1,0 +1,11 @@
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        if len(words) <= 1: return True
+        
+        numOrder = [[order.index(c) for c in word] for word in words]
+        
+        for i in range(1, len(numOrder)):
+            if numOrder[i] < numOrder[i - 1]: 
+                return False
+            
+        return True
