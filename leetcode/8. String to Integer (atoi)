@@ -1,0 +1,36 @@
+class Solution:
+    def myAtoi(self, str: str) -> int:
+        base = {
+            "0": 0,
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9
+        }
+        
+        sign, count, started = "+", 0, False
+        
+        for s in str: 
+            if not started:
+                if s == " ": continue
+                if (s == "-" or s == "+"): 
+                    sign = s
+                    started = True
+                    continue 
+
+            if s not in base: 
+                break
+                                        
+            if not started: started = True
+            count = (count * 10) + base[s]
+            
+        if sign == "-": count *= -1
+        if count < -2**31: return -2**31
+        if count > 2**31 - 1: return 2**31 - 1
+            
+        return count
