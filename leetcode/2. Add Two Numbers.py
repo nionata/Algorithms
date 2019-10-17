@@ -5,30 +5,29 @@
 #         self.next = None
 
 class Solution:
-    def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: ListNode
-        :type l2: ListNode
-        :rtype: ListNode
-        """
-        head = ListNode(0)
-        currNode = head
+    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        h = cur = ListNode(0) 
+        
         while l1 or l2:
-            newVal =  currNode.val
-            if l1: 
-                newVal += l1.val
+            curVal = cur.val
+            
+            if l1:
+                curVal += l1.val
                 l1 = l1.next
             if l2:
-                newVal += l2.val
+                curVal += l2.val
                 l2 = l2.next
-            remainder = 0
-            if newVal >= 10:
-                remainder = 1
-                newVal = newVal - 10
-            currNode.val = newVal
-            currNode.next = None
-            if l1 or l2 or remainder != 0:
-                nextNode = ListNode(remainder)
-                currNode.next = nextNode
-                currNode = currNode.next
-        return head
+                
+            r = 0
+            
+            if curVal > 9: 
+                r = 1
+                curVal = curVal % 10
+                
+            cur.val = curVal
+                
+            if l1 or l2 or r != 0:
+                cur.next = ListNode(r)
+                cur = cur.next
+        
+        return h
