@@ -1,0 +1,37 @@
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        
+        def binaryLower(l, r, arr, target):
+            if l > r:
+                return -1
+            
+            mid = l + (r - l) // 2
+            curr = arr[mid]
+            
+            if curr == target and (mid == 0 or arr[mid - 1] < target):
+                return mid
+            elif target <= curr:
+                return binaryLower(l, mid - 1, arr, target)
+            else:
+                return binaryLower(mid + 1, r, arr, target)
+            
+        def binaryHigher(l, r, arr, target):
+            if l > r: 
+                return -1
+            
+            mid = l + (r - l) // 2
+            curr = arr[mid]
+            
+            if curr == target and (mid == len(arr) - 1 or arr[mid + 1] > target):
+                return mid
+            elif target >= curr:
+                return binaryHigher(mid + 1, r, arr, target)
+            else:
+                return binaryHigher(l, mid - 1, arr, target)
+            
+        lower = binaryLower(0, len(nums) - 1, nums, target)
+        higher = binaryHigher(0, len(nums) - 1, nums, target)
+        
+        if lower == -1 and higher == -1:
+            return [-1, -1]
+        return [lower, higher]
