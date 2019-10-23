@@ -1,0 +1,19 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        sol, r = "", 0
+        
+        while a or b or r != 0:
+            aVal = int(a[-1]) if len(a) else 0
+            bVal = int(b[-1]) if len(b) else 0
+            
+            sum = aVal + bVal + r
+            newVal = sum % 2
+            
+            sol = str(newVal) + sol[::]
+            
+            r = 1 if sum >= 2 else 0
+            
+            a = a[:-1]
+            b = b[:-1]
+            
+        return sol
