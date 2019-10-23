@@ -1,0 +1,24 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        perms, curr, used = [], [], {}
+        
+        def permutate(depth):
+            if depth == len(nums):
+                perms.append(curr[::])
+                return
+            
+            for i in range(len(nums)):
+                if i in used and used[i]:
+                    continue
+                
+                curr.append(nums[i])
+                used[i] = True
+                
+                permutate(depth + 1)
+                
+                curr.pop()
+                used[i] = False
+
+        permutate(0)
+        return perms
+        
