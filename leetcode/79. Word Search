@@ -1,0 +1,33 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        height = len(board)
+        width = len(board[0]) if height != 0 else 0
+        
+        def helper(board, word, r, c):
+            
+            if not len(word):
+                return True
+        
+            curr = word[0]
+                        
+            if board[r][c] != "-1" and curr == board[r][c]:
+                temp = board[r][c]
+                board[r][c] = "-1"
+                
+                right = True if c + 1 < width and helper(board, word[1:], r, c + 1) else False
+                left = True if c - 1 >= 0 and helper(board, word[1:], r, c - 1) else False
+                up = True if r - 1 >= 0 and helper(board, word[1:], r - 1, c) else False
+                down = True if r + 1 < height and helper(board, word[1:], r + 1, c) else False
+                
+                if right or left or up or down or len(word) == 1:
+                    return True
+                else:
+                    board[r][c] = temp
+                    return False
+            return False
+        
+        for i in range(height):
+            for j in range(width):
+                if helper(board, word, i, j):
+                    return True
+        return False
