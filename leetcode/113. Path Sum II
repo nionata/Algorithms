@@ -7,9 +7,9 @@
 
 class Solution:
     def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
-        paths = []
+        paths, path = [], []
         
-        def sumPaths(node, path, pSum):
+        def sumPaths(node, pSum):
             if node:
                 path.append(node.val)
                 pSum += node.val
@@ -17,10 +17,10 @@ class Solution:
                 if not node.left and not node.right and pSum == sum:
                     paths.append(path[:])
                     
-                sumPaths(node.left, path, pSum)
-                sumPaths(node.right, path, pSum)
+                sumPaths(node.left, pSum)
+                sumPaths(node.right, pSum)
                 
                 path.pop()
 
-        sumPaths(root, [], 0)
+        sumPaths(root, 0)
         return paths
