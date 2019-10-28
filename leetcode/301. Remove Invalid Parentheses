@@ -1,0 +1,38 @@
+class Solution:
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        self.sols = set()
+        self.minRemovals = float('inf')
+        
+        def dfs(i, left, right, removals, expression):
+            if i == len(s):
+                if removals <= self.minRemovals and left == right:
+                    newExpression = "".join(expression)
+                    
+                    if removals < self.minRemovals:
+                        self.sols, self.minRemovals = set(), removals
+                        
+                    self.sols.add(newExpression)
+            else:
+                curr = s[i]
+                i = i+1
+                
+                if curr != "(" and curr != ")":
+                    expression.append(curr)
+                    
+                    dfs(i, left, right, removals, expression)
+                    
+                    expression.pop()
+                else:
+                    dfs(i, left, right, removals + 1, expression)
+                    
+                    expression.append(curr)
+                    
+                    if curr == "(":
+                        dfs(i, left + 1, right, removals, expression)
+                    elif right < left: 
+                        dfs(i, left, right + 1, removals, expression)
+                        
+                    expression.pop()
+                
+        dfs(0, 0, 0, 0, [])
+        return self.sols
