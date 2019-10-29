@@ -6,6 +6,7 @@ class Node:
         self.neighbors = neighbors
 """
 class Solution:
+    # DFS
     def cloneGraph(self, node: 'Node') -> 'Node':
         clones = {}
         
@@ -18,3 +19,23 @@ class Solution:
                 return clones[curr]
                 
         return dfs(node)
+        
+    # BFS
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        clones, q = {}, deque()
+        
+        clones[node] = Node(node.val, [])
+        q.append(node)
+        while q:
+            curr = q.popleft()
+            newNode = clones[curr]
+            
+            for n in curr.neighbors:
+                if n in clones:
+                    newNode.neighbors.append(clones[n])
+                else:
+                    clones[n] = Node(n.val, [])
+                    newNode.neighbors.append(clones[n])
+                    q.append(n)
+                    
+        return clones[node]        
