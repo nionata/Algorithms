@@ -1,0 +1,16 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        subsets = []
+        
+        def binarySubsets(i, subset):
+            if i == len(nums):
+                subsets.append(subset[:])
+            else:                
+                binarySubsets(i+1, subset)
+                
+                subset.append(nums[i])
+                binarySubsets(i+1, subset)
+                subset.pop()
+                
+        binarySubsets(0, [])
+        return list(subsets)
