@@ -7,6 +7,7 @@ class Node:
         self.right = right
 """
 class Solution:
+    # Iterative
     def treeToDoublyList(self, root: 'Node') -> 'Node':
         if not root: 
             return
@@ -35,4 +36,32 @@ class Solution:
             
         last.right = head
         head.left = last  
+        return head
+        
+    # Recursive
+    def treeToDoublyList(self, root: 'Node') -> 'Node':
+        head, last = None, None
+        
+        def dfs(node):
+            nonlocal head, last
+            
+            if node:
+                if node.left:
+                    dfs(node.left)
+                
+                if last:
+                    node.left = last
+                    last.right = node
+                else:
+                    head = node
+                
+                last = node
+                
+                dfs(node.right)
+        
+        if root:
+            dfs(root)
+            last.right = head
+            head.left = last
+        
         return head
