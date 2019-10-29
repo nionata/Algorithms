@@ -17,5 +17,4 @@ class Solution:
                 clones[curr].neighbors = [dfs(n) for n in curr.neighbors]
                 return clones[curr]
                 
-        dfs(node)
-        return clones[node]
+        return dfs(node)
