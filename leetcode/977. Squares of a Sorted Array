@@ -1,0 +1,6 @@
+class Solution:
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        # naive - square all vals, sort arr 
+        squares = [a**2 for a in A]
+        squares.sort()
+        return squares
