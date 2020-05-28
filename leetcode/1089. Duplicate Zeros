@@ -1,0 +1,21 @@
+class Solution:
+    def duplicateZeros(self, arr: List[int]) -> None:
+        size, count = len(arr)-1, 0
+        for i in range(size+1):
+            offset = size - count
+            if i > offset: break
+            if arr[i] == 0: 
+                if i == offset:
+                    arr[size] = 0
+                    size-=1
+                    break
+                count+=1
+                
+        i, j = size-count, size
+        while i < j:
+            arr[j] = arr[i]
+            if arr[i] == 0: 
+                arr[j-1] = arr[i]
+                j-=1
+            i-=1
+            j-=1
