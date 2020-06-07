@@ -1,0 +1,19 @@
+class Solution:
+    def validMountainArray(self, A: List[int]) -> bool:
+           
+        max, size = None, len(A)
+        if size < 3: return False
+        
+        for i in range(1, size):
+            
+            prev, curr = A[i - 1], A[i]
+            if prev == curr: return False
+            
+            if max == None:
+                if prev > curr: 
+                    if i != 1: max = prev
+                    else: return False
+            else:
+                if prev < curr: return False
+        
+        return max != None
