@@ -1,0 +1,9 @@
+class Solution:
+    def checkIfExist(self, arr: List[int]) -> bool:
+        
+        doubles = {}
+        for (i, num) in enumerate(arr):
+            if num/2 in doubles or num*2 in doubles: return True
+            doubles[num] = i 
+            
+        return False
