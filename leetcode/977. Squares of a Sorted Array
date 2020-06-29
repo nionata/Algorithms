@@ -14,17 +14,12 @@ class Solution:
             r +=1
         l, ans = r-1, []
         while l > -1 or r < size:
-            if l > -1 and r < size:
-                if abs(A[l]) < A[r]:
-                    ans.append(A[l]*A[l])
-                    l -=1
-                else: 
-                    ans.append(A[r]*A[r])
-                    r +=1
-            elif l > -1: 
-                ans.append(A[l]*A[l])
+            vl = abs(A[l]) if l > -1 else float('inf')
+            vr = A[r] if r < size else float('inf')
+            if vl < vr:
+                ans.append(vl*vl)
                 l -=1
-            else: 
-                ans.append(A[r]*A[r])
+            else:
+                ans.append(vr*vr)
                 r +=1
         return ans
