@@ -1,0 +1,15 @@
+class Solution:
+    def thirdMax(self, nums: List[int]) -> int:
+        maxs = [-float('inf'), -float('inf'), -float('inf')]
+        for i in range(len(nums)):
+            num = nums[i]
+            if num > maxs[0]:
+                maxs[2] = maxs[1]
+                maxs[1] = maxs[0]
+                maxs[0] = num
+            elif num < maxs[0] and num > maxs[1]:
+                maxs[2] = maxs[1]
+                maxs[1] = num
+            elif num < maxs[1] and num > maxs[2]:
+                maxs[2] = num
+        return maxs[2] if maxs[2] != -float('inf') else maxs[0]
