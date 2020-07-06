@@ -1,0 +1,6 @@
+class Solution:
+    def heightChecker(self, heights: List[int]) -> int:
+        order, moves = sorted(heights), 0
+        for i in range(len(heights)):
+            if heights[i] != order[i]: moves +=1
+        return moves
