@@ -4,3 +4,7 @@ class Solution:
         for i in range(len(heights)):
             if heights[i] != order[i]: moves +=1
         return moves
+
+    # better memory
+    def heightChecker(self, heights: List[int]) -> int:
+        return sum(x != y for x, y in zip(sorted(heights), heights))
