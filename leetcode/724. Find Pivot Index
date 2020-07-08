@@ -1,0 +1,8 @@
+class Solution:
+    def pivotIndex(self, nums: List[int]) -> int:
+        arrSum, currSum = sum(nums), 0
+        for (i, num) in enumerate(nums):
+            if currSum == arrSum - currSum - num:
+                return i
+            currSum += num
+        return -1
