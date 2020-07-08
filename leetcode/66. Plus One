@@ -1,0 +1,9 @@
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        overflow = 1
+        for i in range(len(digits) - 1, -1, -1):
+            if overflow == 0: break 
+            curr = digits[i] + overflow
+            digits[i] = curr % 10
+            overflow = 1 if curr > 9 else 0
+        return digits if overflow != 1 else [1] + digits
