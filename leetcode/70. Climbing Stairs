@@ -1,5 +1,5 @@
 # O(N) / O(N)
-#  - w/out memoization O(N^2)
+#  - w/out memoization O(2^N)
 class Solution:
     def climbStairs(self, n: int, cache = {}) -> int:
         if n == 0: return 1
