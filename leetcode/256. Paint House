@@ -1,0 +1,10 @@
+class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        return self.helper(costs, 0, None, {})
+        
+    def helper(self, costs, house, color, cache) -> int:
+        if house == len(costs): return 0
+        if (house, color) in cache: return cache[(house, color)]
+        minCost = min([costs[house][i] + self.helper(costs, house+1, i, cache) for i in [0, 1, 2] if color != i])
+        cache[(house, color)] = minCost
+        return minCost
