@@ -1,3 +1,4 @@
+# O(m * n) - BFS
 class Solution:
     def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
         m, n = len(matrix), len(matrix[0])
@@ -25,3 +26,22 @@ class Solution:
                     queue.append((a-1,b))
                     queue.append((a, b+1))
                     queue.append((a, b-1))
+           
+# O(m * n) - DP
+class Solution:
+    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        r, c = len(matrix), len(matrix[0])
+        cache = [[0 for _ in range(c)] for _ in range(r)]
+        for i in range(r):
+            for j in range(c):
+                if matrix[i][j] == 1:
+                    up = cache[i-1][j] if i != 0 else float('inf')
+                    left = cache[i][j-1] if j != 0 else float('inf')
+                    cache[i][j] = min(up, left) + 1        
+        for i in reversed(range(r)):
+            for j in reversed(range(c)):
+                if matrix[i][j] == 1:
+                    down = cache[i+1][j] if i != r-1 else float('inf')
+                    right = cache[i][j+1] if j != c-1 else float('inf')
+                    cache[i][j] = min(cache[i][j], min(down, right)+1)
+        return cache
