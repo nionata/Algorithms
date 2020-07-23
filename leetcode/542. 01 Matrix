@@ -1,0 +1,27 @@
+class Solution:
+    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        m, n = len(matrix), len(matrix[0])
+        # loop thru and look for a 1
+        for i in range(m):
+            for j in range(n):
+                # on 1, init que
+                if matrix[i][j] == 1:
+                    distance = self.bfs(matrix, i, j, m, n)
+                    matrix[i][j] = distance
+        return matrix
+                    
+    def bfs(self, matrix, i, j, m, n) -> int:
+        queue, distance = collections.deque(), -1
+        queue.append((i, j))
+        while queue: 
+            size = len(queue)
+            distance += 1
+            for _ in range(size):
+                a, b = queue.popleft()
+                if 0 <= a < m and 0 <= b < n:
+                    if matrix[a][b] == 0:
+                        return distance
+                    queue.append((a+1, b))
+                    queue.append((a-1,b))
+                    queue.append((a, b+1))
+                    queue.append((a, b-1))
