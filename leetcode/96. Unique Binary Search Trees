@@ -1,3 +1,4 @@
+# Recursion w/ Memoization - O(N^2)
 class Solution:
     def numTrees(self, n: int) -> int:
         return self.helper(1, n+1)
@@ -12,3 +13,12 @@ class Solution:
             pos += left*right
         cache[r-l] = pos
         return pos
+
+# DP - O(N^2)
+class Solution:
+    def numTrees(self, n: int) -> int:
+        cache = [1, 1, 2] + [0]*(n-2)
+        for i in range(3, n+1):
+            for j in range(1, i+1):
+                cache[i] += cache[j-1]*cache[i-j]
+        return cache[n]
