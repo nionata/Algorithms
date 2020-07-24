@@ -1,0 +1,20 @@
+# Sliding window - O(|s| + |t|) 
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if not s or not t: return ""
+        count, size = Counter(t), len(s)
+        l, r, ans, soln = 0, 0, (size, None, None), len(count)
+        while r < size:
+            char = s[r]
+            if char in count: 
+                count[char]-=1
+                if count[char] == 0: soln-=1
+            while soln == 0:
+                if r-l < ans[0]: ans = (r-l, l, r)
+                char = s[l]
+                if char in count: 
+                    count[char]+=1
+                    if count[char] == 1: soln+=1
+                l+=1
+            r+=1
+        return s[ans[1]:ans[2]+1] if ans[0] != size else ""
