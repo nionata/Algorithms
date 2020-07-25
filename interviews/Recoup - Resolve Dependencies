@@ -11,7 +11,7 @@ function resolveDependencies(dependenices) {
     }
   }
   
-  let stack = [Object.keys(map)[0]]
+  let stack = Object.keys(map).map(num => parseInt(num))
   let ans = []
   
   // resolve the dependencies
@@ -21,6 +21,7 @@ function resolveDependencies(dependenices) {
     
     // if the number has no dependencies add it
     if (!map[curr] || !map[curr].length) {
+      // check if it already exists
       if (ans.indexOf(curr) == -1) ans.push(curr)
       continue
     }
