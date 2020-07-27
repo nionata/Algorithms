@@ -1,0 +1,13 @@
+class Solution:
+    def compress(self, chars: List[str]) -> int:
+        insert, first, size = 0, 0, len(chars)
+        for i in range(size):
+            if i == size-1 or chars[i] != chars[i+1]:
+                chars[insert] = chars[i]
+                if i-first+1 > 1:
+                    for c in str(i-first+1):
+                        insert+=1
+                        chars[insert] = c
+                insert+=1
+                first = i+1
+        return insert
