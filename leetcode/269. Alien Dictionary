@@ -1,0 +1,23 @@
+class Solution:
+    def alienOrder(self, words: List[str]) -> str:
+        size, ans = len(words), ""
+        if size == 1: return words[0]
+        map = {char: [0, set()] for w in words for char in w}
+        for first, second in zip(words, words[1:]):
+            for a, b in zip(first, second): 
+                if a != b:
+                    if b not in map[a][1]:
+                        map[b][0]+=1
+                        map[a][1].add(b)
+                    break
+            else:
+                if len(first) > len(second): return ans
+        stack = collections.deque([char for char, deps in map.items() if deps[0] == 0])
+        while stack: 
+            curr = stack.pop()
+            ans+=curr
+            for child in map[curr][1]:
+                map[child][0]-=1
+                if map[child][0] == 0: stack.append(child)
+        if len(ans) != len(map): return ""
+        return ans
