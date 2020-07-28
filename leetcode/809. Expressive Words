@@ -1,0 +1,26 @@
+class Solution:
+    def expressiveWords(self, S: str, words: List[str]) -> int:
+        exprs, last, size, ans = [], 0, len(S), 0
+        if not size: return ans
+        for i, char in enumerate(S):
+            if i == size-1 or char != S[i+1]:
+                exprs.append((char, i-last+1))
+                last = i+1
+        groups = len(exprs)
+        print(exprs)
+        for w in words:
+            curr, last, stretch, size = 0, 0, True, len(w)
+            for i, char in enumerate(w):
+                if curr >= groups or char != exprs[curr][0]:
+                    stretch = False
+                    break
+                if i == size-1 or char != w[i+1]:
+                    count, req = i-last+1, exprs[curr][1]
+                    print(i, count, exprs[curr], w, char)
+                    if count > req or (count < req and req < 3):
+                        stretch = False
+                        break
+                    curr+=1
+                    last = i+1
+            if stretch and curr == groups: ans+=1
+        return ans
