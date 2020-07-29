@@ -1,0 +1,9 @@
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        for c in '!?\',;.': paragraph = paragraph.replace(c, ' ').lower()
+        count, mostFreq = Counter(paragraph.split(' ')), (None, -float('inf'))
+        for w in banned: 
+            if w in count: count.pop(w)
+        for word, freq in count.items(): 
+            if word != '' and freq > mostFreq[1]: mostFreq = (word, freq)
+        return mostFreq[0]
