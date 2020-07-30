@@ -4,6 +4,16 @@
 #         self.val = x
 #         self.next = None
 
+# O(n) / O(n)
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        curr, visited = head, set()
+        while curr:
+            if curr in visited: return True
+            visited.add(curr)
+            curr = curr.next
+        return False
+
 # O(n) / O(1)
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
