@@ -1,3 +1,4 @@
+# O(n^2) / O(n) - Recursion w/ Memoization
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str], cache = {}) -> bool:
         return self.helper(s, set(wordDict), {})
@@ -12,3 +13,15 @@ class Solution:
                     return True
         cache[word] = False
         return False
+        
+# O(n^2) / O(n) - DP
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dict, cache, size = set(wordDict), defaultdict(bool), len(s)
+        cache[0] = True
+        for r in range(1, size+1):
+            for l in range(0, r):
+                if l in cache and s[l:r] in dict:
+                    cache[r] = True
+                    break
+        return cache[size]
