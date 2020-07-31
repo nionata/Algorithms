@@ -7,7 +7,6 @@ class Solution:
                 if grid[i][j] == 2: queue.append((i,j))
         mins = -1
         while queue:
-            print(queue)
             size = len(queue)
             for _ in range(size):
                 i, j = queue.popleft()
@@ -17,5 +16,4 @@ class Solution:
                         grid[a][b] = 2
                         queue.append((a, b))
             mins+=1
-        print(grid)
         return mins if not any(1 in row for row in grid) else -1
