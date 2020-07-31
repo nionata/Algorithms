@@ -1,0 +1,21 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        m, n, queue = len(grid), len(grid[0]), collections.deque()
+        if all(grid[i][j] == 0 for j in range(n) for i in range(m)): return 0
+        for i in range(m):
+            for j in range(n): 
+                if grid[i][j] == 2: queue.append((i,j))
+        mins = -1
+        while queue:
+            print(queue)
+            size = len(queue)
+            for _ in range(size):
+                i, j = queue.popleft()
+                for x, y in [(-1,0),(0,-1),(1,0),(0,1)]:
+                    a, b = x+i, y+j
+                    if 0 <= a < m and 0 <= b < n and grid[a][b] == 1: 
+                        grid[a][b] = 2
+                        queue.append((a, b))
+            mins+=1
+        print(grid)
+        return mins if not any(1 in row for row in grid) else -1
