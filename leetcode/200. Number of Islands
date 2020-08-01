@@ -22,18 +22,23 @@ class Solution:
 # Recursive DFS - O(m*n) / O(m*n)
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        m, ans = len(grid), 0
-        n = len(grid[0]) if m else 0
-        for i in range(m):
-            for j in range(n):
+        
+        islands = 0
+        
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
                 if grid[i][j] == '1':
-                    self.dfs(grid, (i, j), (m, n))
-                    ans+=1
-        return ans
+                    self.dfs(grid, i, j)
+                    islands+=1
                     
-    def dfs(self, grid, start, bounds):
-        i, j = start
-        if 0 <= i < bounds[0] and 0 <= j < bounds[1] and grid[i][j] == '1':
-            grid[i][j] = -1
-            for x, y in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-                self.dfs(grid, (i+x, j+y), bounds)
+        return islands
+                    
+    def dfs(self, grid, i, j):
+        
+        in_bounds = 0 <= i < len(grid) and 0 <= j < len(grid[0])
+        if not in_bounds or grid[i][j] != '1': 
+            return
+        
+        grid[i][j] = '0'
+        for x, y in [(-1,0),(0,-1),(1,0),(0,1)]:
+            self.dfs(grid, i+x, j+y) 
