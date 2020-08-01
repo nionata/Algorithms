@@ -1,0 +1,9 @@
+# O(n) / O(1)
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        curr, valley, size = 0, (0, float('inf')), len(gas)
+        for i in range(size):
+            curr += gas[i]-cost[i]
+            if curr < valley[1]: valley = (i, curr)
+        if curr < 0: return -1
+        return valley[0]+1 if valley[0] != size-1 else 0
