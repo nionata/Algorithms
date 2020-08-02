@@ -1,0 +1,36 @@
+class Solution:
+    def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:
+
+        # Contruct graph
+        graph = defaultdict(list)        
+        for a, b in connections:
+            graph[a].append(b)
+            graph[b].append(a)
+
+        critical = []
+        rank = [None]*n
+        lowest = [None]*n
+        visited = set()
+        
+        self.dfs(graph, critical, rank, lowest, visited)
+        return critical
+
+    def dfs(self, graph, critical, rank, lowest, visited, curr = 0, parent = None):
+        
+        if curr in visited:
+            return
+        
+        visited.add(curr)
+        
+        rank[curr] = len(visited)
+        lowest[curr] = len(visited)
+        
+        for node in graph[curr]:
+            if node == parent:
+                continue 
+                
+            self.dfs(graph, critical, rank, lowest, visited, node, curr)
+            lowest[curr] = min(lowest[curr], lowest[node])
+            
+            if lowest[node] > rank[curr]:
+                critical.append([curr, node])
