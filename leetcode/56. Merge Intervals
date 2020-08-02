@@ -1,13 +1,14 @@
+# O(nlogn) / O(1)
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
         intervals.sort(key=lambda interval: interval[0])
+        write = -1 
         
-        merged = []
-        
-        for interval in intervals:
-            if not merged or merged[-1][1] < interval[0]:
-                merged.append(interval)
-            else:
-                merged[-1][1] = max(merged[-1][1], interval[1])
-                
-        return merged
+        for read in intervals:
+            if write == -1 or intervals[write][1] < read[0]:
+                write+=1
+                intervals[write][0] = read[0]
+            intervals[write][1] = max(intervals[write][1], read[1])
+            
+        return intervals[:write+1]
