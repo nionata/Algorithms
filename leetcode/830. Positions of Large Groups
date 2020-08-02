@@ -1,9 +1,13 @@
 class Solution:
     def largeGroupPositions(self, S: str) -> List[List[int]]:
-        size, solns, last = len(S), [], 0
-        for i in range(size):
-            if i == size-1 or S[i] != S[i+1]:
-                if i-last+1 >= 3: 
-                    solns.append([last, i])
-                last = i+1
-        return solns
+
+        size = len(S)
+        g_start, ans = 0, []
+    
+        for g_end in range(size):
+            if g_end == size-1 or S[g_end] != S[g_end+1]:
+                g_size = g_end-g_start+1
+                if g_size >= 3:
+                    ans.append([g_start, g_end])
+                g_start = g_end+1
+        return ans
