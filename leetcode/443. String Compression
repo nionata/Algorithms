@@ -1,13 +1,19 @@
+# O(N) / O(1)
 class Solution:
     def compress(self, chars: List[str]) -> int:
-        insert, first, size = 0, 0, len(chars)
-        for i in range(size):
-            if i == size-1 or chars[i] != chars[i+1]:
-                chars[insert] = chars[i]
-                if i-first+1 > 1:
-                    for c in str(i-first+1):
-                        insert+=1
-                        chars[insert] = c
-                insert+=1
-                first = i+1
-        return insert
+        size, write, start = len(chars), 0, 0
+        
+        for read in range(size):
+            if read == size-1 or chars[read] != chars[read+1]:
+                g_size = read-start+1
+                
+                chars[write] = chars[read]
+                write+=1
+                
+                if g_size > 1:
+                    for num in str(g_size):
+                        chars[write] = num
+                        write+=1
+                
+                start = read+1
+        return write
