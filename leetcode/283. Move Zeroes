@@ -1,10 +1,12 @@
+# O(n) / O(1)
 class Solution:
     def moveZeroes(self, nums: List[int]) -> None:
-        nz = -1
-
-        for i in range(len(nums)):
-            if nums[i] != 0:
-                nz += 1
-                temp = nums[nz]
-                nums[nz] = nums[i]
-                nums[i] = temp
+        
+        write = 0
+        
+        for i, num in enumerate(nums):
+            if num != 0:
+                temp = nums[i]
+                nums[i] = nums[write]
+                nums[write] = temp
+                write +=1
