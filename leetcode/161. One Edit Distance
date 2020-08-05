@@ -1,0 +1,22 @@
+# O(n) / O(n)
+class Solution:
+    def isOneEditDistance(self, s: str, t: str) -> bool:
+        
+        size_s, size_t = len(s), len(t)
+        i = 0
+                
+        # scan the smallest distance
+        while i < min(size_s, size_t):
+            if s[i] != t[i]:
+                break
+            i+=1
+        else:
+            # made it through the entire string
+            return abs(size_s - size_t) == 1
+        
+        # if they are the same size, check update
+        if size_s == size_t:
+            return s[i+1:] == t[i+1:]
+        
+        # not the same size, check delete or add
+        return s[i+0:] == t[i+1:] or s[i+1:] == t[i+0:]
