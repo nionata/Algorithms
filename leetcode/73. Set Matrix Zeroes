@@ -1,0 +1,25 @@
+# O(m*n) / O(m+n)
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        
+        if not len(matrix):
+            return
+        
+        m, n = len(matrix), len(matrix[0])
+        zeroRow, zeroCol = set(), set()
+        
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    zeroRow.add(i)
+                    zeroCol.add(j)
+        
+        for i in range(m):
+            
+            if i in zeroRow:
+                matrix[i] = [0]*n
+                continue 
+            
+            for j in range(n):
+                if j in zeroCol:
+                    matrix[i][j] = 0
