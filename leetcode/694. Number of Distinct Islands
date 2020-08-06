@@ -1,0 +1,35 @@
+# O(m*n) / O(m*n)
+class Solution:
+    def numDistinctIslands(self, grid: List[List[int]]) -> int:
+        
+        if not grid:
+            return -1
+
+        m, n = len(grid), len(grid[0])
+        unique_islands = set()
+
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    path_shape = []
+                    self.dfs(grid, i, j, m, n, path_shape)
+                    string_path_shape = ''.join(path_shape)
+                    unique_islands.add(string_path_shape)
+
+        return len(unique_islands)
+
+    def dfs(self, grid, i, j, m, n, path_shape, level=0):
+
+        grid[i][j] = 0
+
+        for x, y in [(0, 1), (-1, 0), (0, -1), (1, 0)]:
+
+            a, b = i+x, j+y
+
+            in_bounds = 0 <= a < m and 0 <= b < n
+            if not in_bounds or grid[a][b] != 1:
+                continue
+
+            new_level = level+1
+            path_shape.append('{lvl},{x},{y} '.format(lvl=new_level, x=x, y=y))
+            self.dfs(grid, a, b, m, n, path_shape, new_level)
