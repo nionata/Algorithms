@@ -1,0 +1,29 @@
+# O(n) / O(n)
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        
+        invalidParentheses = self.getInvalidPositions(s)
+        validString = ""
+        
+        for i, char in enumerate(s):
+            if i not in invalidParentheses:
+                validString +=char
+        
+        return validString
+        
+    def getInvalidPositions(self, s: str) -> set:
+        
+        stack = []
+        
+        for i, char in enumerate(s):
+            
+            if char == '(':
+                stack.append(i)
+                
+            if char == ')':
+                if stack and s[stack[-1]] == '(':
+                    stack.pop()
+                    continue
+                stack.append(i)
+                
+        return set(stack)
