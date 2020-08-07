@@ -7,3 +7,16 @@ class Solution:
         for word, freq in count.items(): 
             if word != '' and freq > mostFreq[1]: mostFreq = (word, freq)
         return mostFreq[0]
+        
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        clean_str = ''.join([char.lower() if char.isalnum() else ' ' for char in paragraph])
+        words, banned_words = clean_str.split(), set(banned)
+        word_occurences = defaultdict(int)
+        most_freq_word = (None, -float('inf'))
+        for word in words:
+            if word not in banned_words:
+                word_occurences[word] +=1
+                if word_occurences[word] > most_freq_word[1]:
+                    most_freq_word = (word, word_occurences[word])
+        return most_freq_word[0]
