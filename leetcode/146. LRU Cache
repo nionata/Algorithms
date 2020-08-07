@@ -1,0 +1,32 @@
+# O(1) / O(capacity)
+class LRUCache:
+    
+    capacity = None
+    cache = None
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = collections.OrderedDict()
+
+    def get(self, key: int) -> int:
+        
+        # if the value exists, bump it up and return
+        if key in self.cache:
+            self.cache.move_to_end(key)
+            return self.cache[key]
+        
+        # not found
+        return -1
+        
+    def put(self, key: int, value: int) -> None:
+        
+        # if it already exists, bump it up
+        if key in self.cache:
+            self.cache.move_to_end(key)
+            
+        # either way, set the val
+        self.cache[key] = value
+        
+        # pop if we went over capacity
+        if self.capacity < len(self.cache):
+            self.cache.popitem(last=False)
