@@ -7,3 +7,24 @@ class Solution:
             if curr < valley[1]: valley = (i, curr)
         if curr < 0: return -1
         return valley[0]+1 if valley[0] != size-1 else 0
+
+# O(n) / O(1)
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+
+        start_pos = 0
+        curr_sum = 0
+        tot_sum = 0
+        
+        for i in range(len(gas)):
+            curr_sum += gas[i]-cost[i]
+            tot_sum += gas[i]-cost[i]
+            
+            if curr_sum < 0:
+                start_pos = i+1
+                curr_sum = 0
+        
+        if tot_sum < 0:
+            return -1
+        
+        return start_pos if start_pos != len(gas) else 0
