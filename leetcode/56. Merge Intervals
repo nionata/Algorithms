@@ -12,3 +12,20 @@ class Solution:
             intervals[write][1] = max(intervals[write][1], read[1])
             
         return intervals[:write+1]
+
+# O(nlogn) / O(1)
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
+        intervals.sort(key=lambda interval: interval[0])
+        merged_intervals = []
+        
+        for curr_interval in intervals:
+            
+            if merged_intervals and merged_intervals[-1][1] >= curr_interval[0]:
+                merged_intervals[-1][1] = max(merged_intervals[-1][1], curr_interval[1])
+                continue
+                
+            merged_intervals.append(curr_interval)
+            
+        return merged_intervals
