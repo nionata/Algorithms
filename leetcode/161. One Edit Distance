@@ -20,3 +20,23 @@ class Solution:
         
         # not the same size, check delete or add
         return s[i+0:] == t[i+1:] or s[i+1:] == t[i+0:]
+        
+# O(n) / O(n)
+class Solution:
+    def isOneEditDistance(self, s: str, t: str) -> bool:
+
+        if len(s) > len(t):
+            return self.isOneEditDistance(t, s)
+            
+        for i, s_char in enumerate(s):
+            # search till we find a difference
+            if s_char != t[i]:
+                # if they are the same length check same len
+                if len(s) == len(t):
+                    return s[i+1:] == t[i+1:]
+                
+                # since s < t, always add
+                return s[i:] == t[i+1:]
+                    
+        # if everything matches check that they are only one char diff
+        return len(t) - len(s) == 1
