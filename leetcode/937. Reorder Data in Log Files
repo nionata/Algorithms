@@ -10,3 +10,20 @@ class Solution:
             return (-1, string, id)
             
         return sorted(logs, key=custom_compare)
+
+# O(nlogn) / O(n)
+class Solution:
+    def reorderLogFiles(self, logs: List[str]) -> List[str]:
+        def custom_sort(log):
+            
+            # split the key from the rest of the log
+            key, value = log.split(' ', 1)
+            
+            # if it is a digit log, just use insert order
+            if value[0].isnumeric():
+                return (1,)
+            
+            # if it is a letter log, use value and key as backup
+            return (-1, value, key)
+        
+        return sorted(logs, key=custom_sort)
