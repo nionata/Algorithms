@@ -1,35 +1,28 @@
 # O(m*n) / O(m*n)
 class Solution:
     def numDistinctIslands(self, grid: List[List[int]]) -> int:
-        
-        if not grid:
-            return -1
 
         m, n = len(grid), len(grid[0])
         unique_islands = set()
-
+        
         for i in range(m):
             for j in range(n):
                 if grid[i][j] == 1:
-                    path_shape = []
-                    self.dfs(grid, i, j, m, n, path_shape)
-                    string_path_shape = ''.join(path_shape)
-                    unique_islands.add(string_path_shape)
-
+                    curr_island = []
+                    self.dfs(grid, m, n, i, j, curr_island)
+                    unique_islands.add(''.join(curr_island))
+                    
         return len(unique_islands)
-
-    def dfs(self, grid, i, j, m, n, path_shape, level=0):
+    
+    def dfs(self, grid, m, n, i, j, path):
 
         grid[i][j] = 0
-
-        for x, y in [(0, 1), (-1, 0), (0, -1), (1, 0)]:
-
+        
+        for x, y, d in [(0,1,'R'),(-1,0,'U'),(0,-1,'L'),(1,0,'D')]:
             a, b = i+x, j+y
-
             in_bounds = 0 <= a < m and 0 <= b < n
-            if not in_bounds or grid[a][b] != 1:
-                continue
-
-            new_level = level+1
-            path_shape.append('{lvl},{x},{y} '.format(lvl=new_level, x=x, y=y))
-            self.dfs(grid, a, b, m, n, path_shape, new_level)
+            if in_bounds and grid[a][b] == 1:
+                path.append(d)
+                self.dfs(grid, m, n, a, b, path)
+        
+        path.append('-')
