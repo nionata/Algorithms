@@ -1,17 +1,22 @@
+# O(logn) / O(logn)
 class Solution:
     def myPow(self, x: float, n: int) -> float:
-        def halfPow(x, n):
-            if n == 0: 
-                return 1
-            
-            half = halfPow(x, n // 2)
-            
-            if n % 2 == 0:
-                return half * half
-            return half * half * x
-            
+        
         if n < 0:
-            x = 1 / x
-            n *= -1 
+            x = 1/x
+            n = -1*n
             
-        return halfPow(x, n)
+        return self.helper(x, n)
+    
+    def helper(self, x, n):
+  
+        if n == 0:
+            return 1
+        
+        sub_prob = self.helper(x, n//2)
+        result = sub_prob*sub_prob
+        
+        if n%2 == 0:
+            return result
+        else:
+            return result*x
