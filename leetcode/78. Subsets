@@ -1,16 +1,23 @@
+# O(n2^n) / O(n2^n)       
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+
         subsets = []
+        self.helper(nums, 0, subsets)
         
-        def binarySubsets(i, subset):
-            if i == len(nums):
-                subsets.append(subset[:])
-            else:                
-                binarySubsets(i+1, subset)
-                
-                subset.append(nums[i])
-                binarySubsets(i+1, subset)
-                subset.pop()
-                
-        binarySubsets(0, [])
-        return list(subsets)
+        return subsets
+        
+    def helper(self, nums, curr_num, subsets, curr_subset=[]):
+        
+        # base case - reached the end of nums
+        if curr_num == len(nums):
+            subsets.append(curr_subset[::])
+            return
+
+        # include the curr_num
+        curr_subset.append(nums[curr_num])
+        self.helper(nums, curr_num+1, subsets, curr_subset)
+
+        # exclue the curr_num
+        curr_subset.pop()
+        self.helper(nums, curr_num+1, subsets, curr_subset)
