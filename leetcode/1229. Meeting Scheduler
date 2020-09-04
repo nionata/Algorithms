@@ -1,0 +1,26 @@
+# Time - O(n log n)
+# Space - O(1)
+class Solution:
+    def minAvailableDuration(self, slots1: List[List[int]], slots2: List[List[int]], duration: int) -> List[int]:
+
+        a, b = 0, 0
+        slots1.sort()
+        slots2.sort()
+
+        while a < len(slots1) and b < len(slots2):
+            
+            start_a, end_a = slots1[a]
+            start_b, end_b = slots2[b]
+
+            curr_start = max(start_a, start_b)
+            curr_end = min(end_a, end_b)
+
+            if curr_end - curr_start >= duration:
+                return [curr_start, curr_start+duration]
+
+            if end_a > end_b:
+                b+=1
+            else:
+                a+=1
+
+        return []
