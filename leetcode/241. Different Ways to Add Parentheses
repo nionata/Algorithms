@@ -1,0 +1,35 @@
+class Solution:
+    def diffWaysToCompute(self, input: str) -> List[int]:
+
+        return self.helper(input, {})
+        
+    def helper(self, curr_input, cache):
+        
+        if curr_input in cache:
+            return cache[curr_input]
+        
+        if not ('+' in curr_input or '-' in curr_input or '*' in curr_input):
+            return [int(curr_input)]
+        
+        evals = []
+        
+        for i, op in [(i, char) for i, char in enumerate(curr_input) if self.isOp(char)]:
+            
+            left_evals = self.helper(curr_input[:i], cache)
+            right_evals = self.helper(curr_input[i+1:], cache)
+            evals += [self.doOp(op, l, r) for r in right_evals for l in left_evals]
+            
+        cache[curr_input] = evals
+        return evals
+            
+            
+    def isOp(self, char: str):
+        
+        return char == '-' or char == '+' or char == '*'
+    
+    
+    def doOp(self, op: str, a, b):
+        
+        if op == '-': return a-b
+        if op == '+': return a+b
+        if op == '*': return a*b
