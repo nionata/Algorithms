@@ -27,3 +27,22 @@ class Solution:
                 stack.append(i)
                 
         return set(stack)
+        
+# O(n) / O(n)
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        
+        stack = []
+        
+        for i, char in enumerate(s):
+            if char == '(':
+                stack.append(i)
+                
+            if char == ')':
+                if stack and s[stack[-1]] == '(':
+                    stack.pop()
+                else:
+                    stack.append(i)
+           
+        removed = set(stack)
+        return ''.join([c for i, c in enumerate(s) if i not in removed])
