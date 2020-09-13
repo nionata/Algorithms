@@ -1,0 +1,25 @@
+# O(max(num1, num2)) / O(max(num1, num2)+1)
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        
+        remainder = 0
+        p1, p2 = len(num1)-1, len(num2)-1
+        num_sum = []
+        
+        while p1 >= 0 or p2 >= 0:
+            
+            a = int(num1[p1]) if p1 >= 0 else 0
+            b = int(num2[p2]) if p2 >= 0 else 0
+            
+            curr_sum = a+b+remainder
+            new_digit = curr_sum%10
+            remainder = curr_sum//10   
+            num_sum.append(str(new_digit))
+            
+            p1-=1
+            p2-=1
+    
+        if remainder == 1:
+            num_sum.append(str(remainder))
+                        
+        return ''.join(num_sum[::-1])
