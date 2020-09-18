@@ -1,0 +1,22 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+
+        self.solns = []
+        self.generateSet([], candidates, target, 0)
+        return self.solns
+
+    def generateSet(self, curr_set, nums, target, curr_sum):
+
+        if curr_sum == target:
+            self.solns.append(curr_set)
+            return
+
+        if not nums:
+            return
+
+        self.generateSet(curr_set[:], nums[1:], target, curr_sum)
+
+        while (curr_sum + nums[0] <= target):
+            curr_set.append(nums[0])
+            curr_sum+=nums[0]
+            self.generateSet(curr_set[:], nums[1:], target, curr_sum)
