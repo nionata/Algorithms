@@ -7,14 +7,14 @@ class Solution:
 
         pacific_pos = set()
         atlantic_pos = set()
-
-        for i in range(max(m, n)):
-            self.dfs(matrix, m, n, 0, i, pacific_pos)
+        
+        for i in range(m):
             self.dfs(matrix, m, n, i, 0, pacific_pos)
-
-        for i in range(max(m,n)):
-            self.dfs(matrix, m, n, m-1, i, atlantic_pos)
             self.dfs(matrix, m, n, i, n-1, atlantic_pos)
+
+        for i in range(n):
+            self.dfs(matrix, m, n, 0, i, pacific_pos)
+            self.dfs(matrix, m, n, m-1, i, atlantic_pos)
 
         return pacific_pos.intersection(atlantic_pos)
 
