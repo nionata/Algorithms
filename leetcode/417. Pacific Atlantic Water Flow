@@ -1,0 +1,37 @@
+# O(m*n) / O(m*n)
+class Solution:
+    def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
+  
+        m = len(matrix)
+        n = len(matrix[0]) if m else 0
+
+        pacific_pos = set()
+        atlantic_pos = set()
+
+        for i in range(max(m, n)):
+            self.dfs(matrix, m, n, 0, i, pacific_pos)
+            self.dfs(matrix, m, n, i, 0, pacific_pos)
+
+        for i in range(max(m,n)):
+            self.dfs(matrix, m, n, m-1, i, atlantic_pos)
+            self.dfs(matrix, m, n, i, n-1, atlantic_pos)
+
+        return pacific_pos.intersection(atlantic_pos)
+
+    def dfs(self, matrix, m, n, x, y, visited, prev_val = 0):
+
+        in_bounds = 0 <= x < m and 0 <= y < n
+        if not in_bounds: 
+            return
+
+        curr_val = matrix[x][y]
+        if curr_val < prev_val:
+            return
+
+        if (x, y) in visited:
+            return
+        
+        visited.add((x,y))
+
+        for a, b in [(1,0), (0,1),(-1,0),(0,-1)]:
+            self.dfs(matrix, m, n, x+a, y+b, visited, curr_val)
