@@ -9,3 +9,18 @@ class Solution:
             heapq.heappop(heap)
             
         return heapq.heappop(heap)*-1
+        
+# O(nlogk) / O(k)
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        
+        heap = []
+        heapq.heapify(heap)
+        
+        for n in nums:
+            if len(heap) == k:
+                heapq.heappushpop(heap, n)
+            else: 
+                heapq.heappush(heap, n)
+        
+        return heap[0]
