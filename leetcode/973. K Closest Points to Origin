@@ -1,0 +1,12 @@
+# O(klogk) / O(n)
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        
+        heap = [(sqrt(x**2 + y**2), (x,y)) for x, y in points]
+        heapq.heapify(heap)
+        
+        ans = []
+        for _ in range(K):
+            ans.append(heapq.heappop(heap)[1])
+        
+        return ans
