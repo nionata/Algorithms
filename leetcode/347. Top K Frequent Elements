@@ -3,3 +3,19 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         
         return [n for n, c in Counter(nums).most_common(k)]
+        
+# O(n) / O(n)
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        counts = defaultdict(list)
+        most_freq = 0
+        for n, c in list(Counter(nums).items()):
+            counts[c].append(n)
+            most_freq = max(c, most_freq)
+        
+        ans = []
+        for c in range(most_freq, 0, -1):
+            ans.extend(counts[c])
+            if len(ans) == k:
+                return ans
