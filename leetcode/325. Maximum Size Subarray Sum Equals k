@@ -1,0 +1,19 @@
+# O(n) / O(n)
+class Solution:
+    def maxSubArrayLen(self, nums: List[int], k: int) -> int:
+        
+        prefix = {0: -1}
+        curr_sum = 0
+        max_len = 0
+        
+        for i, num in enumerate(nums):
+            
+            curr_sum+=num
+            
+            if curr_sum-k in prefix:
+                max_len = max(max_len, i-prefix[curr_sum-k])
+                
+            if curr_sum not in prefix:
+                prefix[curr_sum] = i
+                
+        return max_len
