@@ -1,0 +1,32 @@
+# O(2^n) / O(m*n)
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        
+        list_sum = sum(nums)
+        
+        if list_sum%2 != 0:
+            return False
+        
+        target_sum = list_sum/2
+        
+        cache = {}
+        
+        return self.partition(nums, target_sum, 0, cache)
+    
+    def partition(self, nums, curr_sum, curr, cache):
+        
+        if (curr, curr_sum) in cache:
+            return cache[(curr, curr_sum)]
+        
+        if curr_sum == 0:
+            return True
+        
+        if curr >= len(nums) or curr_sum < 0:
+            return False
+        
+        partitionResult = \
+            self.partition(nums, curr_sum-nums[curr], curr+1, cache)                           
+            or self.partition(nums, curr_sum, curr+1, cache)
+
+        cache[(curr, curr_sum)] = partitionResult
+        return partitionResult
