@@ -1,0 +1,24 @@
+# O(m*n) / O (m + n)
+class Solution:
+    def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:
+        
+        m = len(grid)
+        n = len(grid[0]) if m else 0
+        
+        r_max = [0]*m 
+        c_max = [0]*n
+        
+        for i in range(m):
+            for j in range(n):
+                h_curr = grid[i][j]
+                r_max[i] = max(r_max[i], h_curr)
+                c_max[j] = max(c_max[j], h_curr)
+                
+        h_max_incr = 0
+        
+        for i in range(m):
+            for j in range(n):
+                h_curr = grid[i][j]
+                h_max_incr+=min(r_max[i], c_max[j])-h_curr
+                
+        return h_max_incr
