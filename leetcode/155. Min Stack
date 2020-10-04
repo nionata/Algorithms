@@ -1,0 +1,23 @@
+# O(1) / O(n)
+class MinStack:
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, x: int) -> None:
+        keep_min = self.stack and self.peak()[1] < x
+        curr_min = self.peak()[1] if keep_min else x
+        
+        self.stack.append((x, curr_min))
+        
+    def pop(self) -> None:
+        self.stack.pop()
+
+    def top(self) -> int:
+        return self.peak()[0]
+
+    def getMin(self) -> int:
+        return self.peak()[1]
+    
+    def peak(self) -> (int, int):
+        return self.stack[-1]
