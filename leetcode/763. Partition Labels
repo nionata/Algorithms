@@ -1,0 +1,22 @@
+# O(n) / O(n)
+class Solution:
+    def partitionLabels(self, S: str) -> List[int]:
+        
+        let_rang = {}
+        
+        for i, char in enumerate(S):
+            if char in let_rang:
+                let_rang[char][1] = i
+            else:
+                let_rang[char] = [i, i]
+                
+        m_intervals = []
+        
+        for char, curr_interval in let_rang.items():
+            s_curr, e_curr = curr_interval
+            if m_intervals and m_intervals[-1][1] >= s_curr:
+                m_intervals[-1][1] = max(m_intervals[-1][1], e_curr)
+            else: 
+                m_intervals.append(curr_interval)
+                
+        return [b-a+1 for a, b in m_intervals]
