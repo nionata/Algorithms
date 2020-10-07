@@ -1,0 +1,26 @@
+# O(nlogn) / O(nlogn)
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        self.quickSort(nums, 0, len(nums)-1)
+        return nums
+    
+    def quickSort(self, nums, lo, high):
+        if lo >= high:
+            return 
+        
+        pivot = self.partition(nums, lo, high)
+        self.quickSort(nums, lo, pivot-1)
+        self.quickSort(nums, pivot+1, high)
+            
+            
+    def partition(self, nums, lo, high):
+        pivot = nums[high]
+        
+        w = lo
+        for r in range(lo, high):
+            if nums[r] < pivot:
+                nums[w], nums[r] = nums[r], nums[w]
+                w+=1
+            
+        nums[w], nums[high] = pivot, nums[w]
+        return w
