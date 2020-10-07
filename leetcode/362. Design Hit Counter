@@ -1,0 +1,33 @@
+from collections import deque
+
+class TimeHit:
+    def __init__(self, time):
+        self.time = time
+        self.hits = 1
+
+class HitCounter:
+    def __init__(self):
+        self.curr_hits = 0
+        self.queue = deque()
+
+    def hit(self, timestamp):
+        self.clearOldHits(timestamp)
+        self.curr_hits += 1
+        
+        if self.queue and self.queue[-1].time == timestamp:
+            self.queue[-1].hits+=1
+            return   
+        
+        self.queue.append(TimeHit(timestamp))
+
+    def getHits(self, timestamp):
+        self.clearOldHits(timestamp)
+
+        return self.curr_hits
+
+    def clearOldHits(self, timestamp):
+        oldest_time = timestamp-300
+
+        while self.queue and self.queue[0].time <= oldest_time:
+            old_time = self.queue.popleft()
+            self.curr_hits-=old_time.hits
