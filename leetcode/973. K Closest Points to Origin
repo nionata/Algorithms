@@ -1,3 +1,4 @@
+# Minheap
 # O(klogn) / O(n)
 class Solution:
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
@@ -11,6 +12,7 @@ class Solution:
         
         return ans
 
+# Maxheap
 # O(nlogk) / O(k)
 class Point:
     def __init__(self, pt):
@@ -38,3 +40,43 @@ class Solution:
                 heapq.heappushpop(heap, curr_pt)
                 
         return [pt.pt for pt in heap]
+
+# Quickselect
+# O(n^2) -> Avg: O(n) / O(n)
+class Point: 
+    def __init__(self, pt):
+        self.pt = pt
+        self.dist = pt[0]**2 + pt[1]**2
+
+class Solution:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:    
+        dist_pts = [Point(pt) for pt in points]
+        
+        self.quickselect(dist_pts, K, 0, len(points)-1)
+        
+        return [pt.pt for pt in dist_pts[:K]]
+    
+    def quickselect(self, points, k, lo, high):
+        if lo >= high:
+            return
+        
+        pivot = self.partition(points, lo, high)
+        
+        if pivot+1 == k:
+            return
+        elif pivot < k:
+            self.quickselect(points, k, pivot+1, high)
+        else: 
+            self.quickselect(points, k, lo, pivot-1)
+        
+    def partition(self, points, lo, high):
+        pivot = points[high].dist
+        w = lo
+        
+        for r in range(lo, high):
+            if points[r].dist < pivot:
+                points[w], points[r] = points[r], points[w]
+                w+=1
+                
+        points[w], points[high] = points[high], points[w]
+        return w
