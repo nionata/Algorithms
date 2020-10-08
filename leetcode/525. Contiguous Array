@@ -1,0 +1,16 @@
+# O(n) / O(n)
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+        
+        pre_sum = {0: -1}
+        max_len, curr_sum = 0, 0
+        
+        for i, n in enumerate(nums):
+            curr_sum += (1 if n == 1 else -1)
+            
+            if curr_sum in pre_sum:
+                max_len = max(max_len, i-pre_sum[curr_sum])
+            else:
+                pre_sum[curr_sum] = i
+        
+        return max_len
