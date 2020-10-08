@@ -1,0 +1,21 @@
+# O(n) / O(n)
+class Solution:
+    def shortestToChar(self, S: str, C: str) -> List[int]:
+        
+        sol = []
+        
+        last_c = float('-inf')
+        for i, s in enumerate(S):
+            if s == C:
+                last_c = i
+            sol.append(i-last_c)
+            
+        print(sol)
+                        
+        last_c = float('inf')
+        for i in range(len(S)-1, -1, -1):
+            if S[i] == C:
+                last_c = i
+            sol[i] = min(sol[i], last_c-i)
+                
+        return sol
