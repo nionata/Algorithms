@@ -1,0 +1,24 @@
+O(1) / O(n)
+class RandomizedSet:
+
+    def __init__(self):
+        self.map = {}
+
+    def insert(self, val: int) -> bool:
+        if val in self.map:
+            return False
+        
+        self.map[val] = True
+        return True
+        
+
+    def remove(self, val: int) -> bool:
+        if val in self.map:
+            del self.map[val]
+            return True
+        
+        return False
+        
+    def getRandom(self) -> int:
+        keys = list(self.map.keys())
+        return keys[random.randint(0, len(keys)-1)]
