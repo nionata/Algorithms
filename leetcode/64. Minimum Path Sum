@@ -1,30 +1,29 @@
+# O(m*n) / O(m*n)
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
         
         m = len(grid)
         n = len(grid[0]) if m else 0
         
-        return self.pathTraverse(grid, m-1, n-1, 0, 0, 0, {})
+        return self.pathTraverse(grid, m-1, n-1, 0, 0, {})
         
-    def pathTraverse(self, grid, lm, ln, i, j, curr_sum, cache):
+    def pathTraverse(self, grid, lm, ln, i, j, cache):
         
-        new_sum = curr_sum+grid[i][j]
-        
-        key = (curr_sum, i, j)
+        key = (i, j)
         
         if key in cache:
             return cache[key]
         
         if i == lm and j == ln:
-            return new_sum
+            return grid[i][j]
         
         min_sum = float('inf')
 
         if i < lm:
-            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i+1, j, new_sum, cache))
+            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i+1, j, cache))
             
         if j < ln:
-            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i, j+1, new_sum, cache))
+            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i, j+1, cache))
             
-        cache[key] = min_sum    
-        return min_sum
+        cache[key] = min_sum+grid[i][j]   
+        return cache[key]
