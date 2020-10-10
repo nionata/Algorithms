@@ -1,3 +1,4 @@
+# Recursion - Top Down
 # O(m*n) / O(m*n)
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
@@ -28,6 +29,7 @@ class Solution:
         cache[key] = min_sum+grid[i][j]   
         return cache[key]
 
+# DP - Bottom Up
 # O(m*n) / O(m*n)
 class Solution:
     def minPathSum(self, grid: List[List[int]]) -> int:
@@ -55,3 +57,30 @@ class Solution:
                 dp[i][j] = curr_val + min(down_min, right_min)
                     
         return dp[0][0]
+    
+# DP - Bottom Up
+# O(m*n) / O(1)
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        
+        m = len(grid)
+        n = len(grid[0]) if m else 0
+        
+        l_m = m-1
+        l_n = n-1
+        
+        for i in range(l_m, -1, -1):
+            for j in range(l_n, -1, -1):
+                
+                curr_val = grid[i][j]
+                
+                if i == l_m and j == l_n:
+                    grid[i][j] = curr_val
+                    continue 
+                    
+                down_min = grid[i+1][j] if i!=l_m else float('inf')
+                right_min = grid[i][j+1] if j!=l_n else float('inf')
+                
+                grid[i][j] = curr_val + min(down_min, right_min)
+                    
+        return grid[0][0]
