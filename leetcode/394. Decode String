@@ -1,0 +1,37 @@
+# O(n) / O(n)
+class Solution:
+    def decodeString(self, s: str) -> str:
+        
+        return self.helper(s)[0]
+        
+    def helper(self, s) -> (str, int):
+
+        decoded = ''
+        
+        i = 0
+        while i < len(s):
+            
+            char = s[i]
+            
+            if char.isalpha():
+                decoded += char
+                i+=1
+            elif char.isnumeric():
+                multiplier = ''
+                
+                while s[i].isnumeric():
+                    multiplier+=s[i]
+                    i+=1
+                    
+                i+=1
+                multiplier = int(multiplier)
+                nested_str, i_change = self.helper(s[i:])
+                
+                decoded += multiplier*nested_str
+                
+                i+=i_change+1
+                
+            elif char == ']':
+                return (decoded, i)
+        
+        return (decoded, i)
