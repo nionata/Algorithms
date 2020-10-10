@@ -1,0 +1,31 @@
+# O(s) / O(1)
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        
+        if len(p) > len(s):
+            return []
+        
+        p_alpha = [0]*26
+        curr_s_alpha = [0]*26
+        
+        for char in p:
+            p_alpha[self.getAIdx(char)]+=1
+            
+        sol = []
+        
+        for i, char in enumerate(s):
+            
+            curr_char_idx = self.getAIdx(char)
+            curr_s_alpha[curr_char_idx]+=1
+            
+            if i >= len(p):
+                last_char_idx = ord(s[i-len(p)]) - ord('a')
+                curr_s_alpha[last_char_idx]-=1
+            
+            if i >= len(p)-1 and p_alpha == curr_s_alpha:
+                sol.append(i-len(p)+1)
+                
+        return sol
+    
+    def getAIdx(self, char):
+        return ord(char) - ord('a')
