@@ -1,0 +1,30 @@
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        
+        m = len(grid)
+        n = len(grid[0]) if m else 0
+        
+        return self.pathTraverse(grid, m-1, n-1, 0, 0, 0, {})
+        
+    def pathTraverse(self, grid, lm, ln, i, j, curr_sum, cache):
+        
+        new_sum = curr_sum+grid[i][j]
+        
+        key = (curr_sum, i, j)
+        
+        if key in cache:
+            return cache[key]
+        
+        if i == lm and j == ln:
+            return new_sum
+        
+        min_sum = float('inf')
+
+        if i < lm:
+            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i+1, j, new_sum, cache))
+            
+        if j < ln:
+            min_sum = min(min_sum, self.pathTraverse(grid, lm, ln, i, j+1, new_sum, cache))
+            
+        cache[key] = min_sum    
+        return min_sum
