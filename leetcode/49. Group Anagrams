@@ -9,3 +9,19 @@ class Solution:
             a_groups[a_key].append(s)
         
         return a_groups.values()
+        
+# O(n*s) / O(n*s)
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        
+        a_groups = defaultdict(list)
+        
+        for s in strs:
+            alpha = [0]*26
+            
+            for c in s:
+                alpha[ord(c)-ord('a')]+=1
+            
+            a_groups[tuple(alpha)].append(s)
+        
+        return a_groups.values()
