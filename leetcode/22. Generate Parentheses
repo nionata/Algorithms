@@ -1,0 +1,19 @@
+# O(2^n) / O(2^n)
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        
+        soln = []
+        self.helper('', 0, 0, n, soln)
+        return soln
+    
+    def helper(self, s, l, r, n, soln):
+        
+        if len(s) == 2*n:
+            soln.append(s)
+            return
+        
+        if l < n: 
+            self.helper(s+'(', l+1, r, n, soln)
+            
+        if r < l: 
+            self.helper(s+')', l, r+1, n, soln)
