@@ -1,0 +1,13 @@
+# O(nlogn) / O(n)
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        
+        counts = list(Counter(s).items())
+        sorted_counts = sorted(counts, key=lambda x: x[1], reverse=True)
+        
+        soln = []
+        
+        for char, count in sorted_counts:
+            soln+=[char]*count
+        
+        return ''.join(soln)     
