@@ -1,0 +1,25 @@
+# O(K * min(N, 2^k)) / O(K * 2^k)
+class Solution:
+    def prisonAfterNDays(self, cells: List[int], N: int) -> List[int]:
+        
+        seen = {}
+        n = 0
+        
+        while n < N:
+            prev_state = tuple(cells)
+            
+            if prev_state in seen:
+                cycle = n-seen[prev_state]
+                print(N)
+                return self.prisonAfterNDays(cells, (N-n)%cycle)
+            else:
+                seen[prev_state] = n
+                
+                cells = [0]*8
+                for i in range(1, 7):
+                    val = 1 if prev_state[i-1] == prev_state[i+1] else 0
+                    cells[i] = val
+                
+            n+=1
+
+        return cells
