@@ -11,9 +11,9 @@ class Trie:
         if not word:
             self.isWord = True
             return
-            
-        child = self.children[word[0]]
-        child.insert(word[1:])
+        
+        key = word[0]
+        self.children[key].insert(word[1:])
 
     def search(self, word: str) -> bool:
         
