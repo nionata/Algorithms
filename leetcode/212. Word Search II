@@ -1,0 +1,57 @@
+class TrieNode:
+    
+    def __init__(self):
+        
+        self.children = defaultdict(TrieNode)
+        self.isWord = False
+
+# O(m*n) / O(max_word_size*words + m*n)
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        
+        m = len(board)
+        n = len(board[0]) if m else 0
+        root = TrieNode()
+        solns = set()
+        
+        # Construct dictionary
+        for word in words:
+            
+            curr = root 
+            
+            for char in word:
+                curr = curr.children[char]
+                
+            curr.isWord = True
+            
+        # Matrix scan
+        for i in range(m):
+            for j in range(n):
+                self.dfs(board, root, m, n, i, j, [], solns)
+                
+        return solns
+        
+    def dfs(self, board, dict_node, m, n, i, j, curr_word, solns):
+        
+        in_bounds = 0 <= i < m and 0 <= j < n
+        if not in_bounds:
+            return
+        
+        curr_val = board[i][j]
+        
+        if curr_val not in dict_node.children:
+            return 
+        
+        board[i][j] = '#'
+        curr_word.append(curr_val)
+        
+        next_node = dict_node.children[curr_val]
+        
+        if next_node.isWord:
+            solns.add(''.join(curr_word))
+        
+        for a, b in [(0,1), (1,0), (0,-1), (-1,0)]:
+            self.dfs(board, next_node, m, n, i+a, j+b, curr_word, solns)
+        
+        board[i][j] = curr_val
+        curr_word.pop()
