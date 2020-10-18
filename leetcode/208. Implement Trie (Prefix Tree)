@@ -1,0 +1,40 @@
+# O(key_size) / O(key_size * keys)
+class Trie:
+
+    def __init__(self):
+        
+        self.isWord = False
+        self.children = defaultdict(Trie)
+
+    def insert(self, word: str) -> None:
+        
+        if not word:
+            self.isWord = True
+            return
+            
+        child = self.children[word[0]]
+        child.insert(word[1:])
+
+    def search(self, word: str) -> bool:
+        
+        if not word:
+            return self.isWord
+        
+        key = word[0]
+        
+        if key not in self.children:
+            return False
+        
+        return self.children[key].search(word[1:])
+        
+    def startsWith(self, prefix: str) -> bool:
+        
+        if not prefix:
+            return True
+        
+        key = prefix[0]
+        
+        if key not in self.children:
+            return False
+        
+        return self.children[key].startsWith(prefix[1:])
