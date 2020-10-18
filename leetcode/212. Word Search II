@@ -12,7 +12,7 @@ class Solution:
         m = len(board)
         n = len(board[0]) if m else 0
         root = TrieNode()
-        solns = set()
+        solns = []
         
         # Construct dictionary
         for word in words:
@@ -48,10 +48,14 @@ class Solution:
         next_node = dict_node.children[curr_val]
         
         if next_node.isWord:
-            solns.add(''.join(curr_word))
+            solns.append(''.join(curr_word))
+            next_node.isWord = False
         
         for a, b in [(0,1), (1,0), (0,-1), (-1,0)]:
             self.dfs(board, next_node, m, n, i+a, j+b, curr_word, solns)
         
         board[i][j] = curr_val
         curr_word.pop()
+        
+        if not len(next_node.children):
+            dict_node.children.pop(curr_val)
