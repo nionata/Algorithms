@@ -1,0 +1,40 @@
+class MaxStack:
+
+    # O(n)
+    def __init__(self):
+        self.stack = []
+
+    # O(1)
+    def push(self, x: int) -> None:
+        keep_max = self.stack and self.peekMax() > x
+        next_max = self.peekMax() if keep_max else x
+        
+        self.stack.append((x, next_max))
+
+    # O(1)
+    def pop(self) -> int:
+        return self.stack.pop()[0]
+
+    # O(1)
+    def top(self) -> int:
+        return self.stack[-1][0]
+
+    # O(1)
+    def peekMax(self) -> int:
+        return self.stack[-1][1]
+
+    # O(n)
+    def popMax(self) -> int:
+        curr_max = self.peekMax()
+        
+        popped_vals = []
+        
+        while self.top() != curr_max:
+            popped_vals.append(self.pop())
+            
+        self.pop()
+            
+        for val in reversed(popped_vals):
+            self.push(val)
+        
+        return curr_max
