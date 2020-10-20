@@ -1,0 +1,23 @@
+# O(n) / O(n)
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        
+        stack = []
+        
+        for next_ast in asteroids:
+            
+            while stack and next_ast < 0 < stack[-1]:
+                
+                if stack[-1] < -next_ast:
+                    stack.pop()
+                    continue
+                    
+                elif stack[-1] == -next_ast:
+                    stack.pop()
+                
+                break
+                    
+            else:
+                stack.append(next_ast)
+                
+        return stack
