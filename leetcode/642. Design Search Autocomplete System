@@ -1,0 +1,66 @@
+class TrieNode:
+    
+    def __init__(self):
+        
+        self.children = defaultdict(TrieNode)
+        self.hot = 0 # isWord = hot > 0
+        
+class Trie:
+    
+    def __init__(self):
+        
+        self.root = TrieNode()
+        self.curr = self.root
+        
+    def currIsWord(self):
+        
+        self.curr.hot+=1 # update hot val
+        self.curr = self.root # reset for next search
+
+    def addSentence(self, sentence, times):
+        
+        curr = self.root
+        
+        for char in sentence:
+            curr = curr.children[char]
+            
+        curr.hot = times 
+        
+    def nextCurr(self, c):
+        
+        self.curr = self.curr.children[c]
+        
+    def getSentences(self, curr_sentence, node):
+                   
+        sentences = []
+        
+        if node.hot > 0:
+            sentences.append((-node.hot, ''.join(curr_sentence)))
+        
+        for child in node.children:
+            sentences.extend(self.getSentences(curr_sentence+child, node.children[child]))
+            
+        return sentences
+
+class AutocompleteSystem:
+
+    def __init__(self, sentences: List[str], times: List[int]):
+        
+        self.trie = Trie()
+        self.search = ''
+        
+        for sentence, count in zip(sentences, times):
+            self.trie.addSentence(sentence, count)
+
+    def input(self, c: str) -> List[str]:
+        
+        if c == '#':
+            self.trie.currIsWord()
+            self.search = ''
+            return []
+        
+        self.search+=c
+        self.trie.nextCurr(c)
+        sentences = self.trie.getSentences(self.search, self.trie.curr)
+        
+        return [x[1] for x in sorted(sentences)[:3]]
