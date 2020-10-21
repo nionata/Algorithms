@@ -1,0 +1,41 @@
+class MedianFinder:
+
+    # Space: O(n)
+    def __init__(self):
+
+        self.maxHeap = []    
+        self.minHeap = []
+
+    # Time: O(logn)
+    def addNum(self, num: int) -> None:
+
+        # Source max <- min
+        if self.isEven():
+            heappush(self.minHeap, num)
+
+            new_min = heappop(self.minHeap)
+
+            heappush(self.maxHeap, -new_min)
+        
+        # Source max -> min 
+        else: 
+            heappush(self.maxHeap, -num)
+
+            new_max = heappop(self.maxHeap)
+
+            heappush(self.minHeap, -new_max)        
+
+    # Time: O(1)
+    def findMedian(self) -> float:
+
+        if self.isEven():
+            curr_max = self.maxHeap[0]
+            curr_min = self.minHeap[0]
+
+            return (-curr_max+curr_min)/2
+        else:
+            return -self.maxHeap[0]
+
+    def isEven(self) -> bool:
+
+        return len(self.maxHeap) == len(self.minHeap)
