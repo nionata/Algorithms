@@ -24,3 +24,31 @@ class Solution:
                     temp.append(combo + c)
             combos = temp
         return combos
+
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        
+        letters = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
+        
+        combos = []
+        
+        for dig in digits:
+            
+            curr_lets = letters[dig]
+            curr_combos = combos[:] if combos else [""]
+            combos = []
+            
+            for let in curr_lets:
+                for combo in curr_combos:
+                    combos.append(combo+let)
+                    
+        return combos
