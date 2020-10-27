@@ -1,0 +1,19 @@
+# O(n) / O(a)
+class Solution:
+    def minSteps(self, s: str, t: str) -> int:
+        
+        sCounts = defaultdict(int)
+        
+        for char in s:
+            sCounts[char]+=1
+            
+        for char in t:
+            sCounts[char]-=1
+            
+        ops = 0
+        
+        for val in sCounts.values():
+            if val > 0:
+                ops+=val
+                
+        return ops
