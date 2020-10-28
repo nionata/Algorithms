@@ -2,18 +2,16 @@
 class Solution:
     def minSteps(self, s: str, t: str) -> int:
         
-        sCounts = defaultdict(int)
+        ops = defaultdict(int)
         
-        for char in s:
-            sCounts[char]+=1
+        for s_c, t_c in zip(s, t):
+            ops[s_c]+=1
+            ops[t_c]-=1
             
-        for char in t:
-            sCounts[char]-=1
-            
-        ops = 0
+        net_ops = 0
         
-        for val in sCounts.values():
+        for val in ops.values():
             if val > 0:
-                ops+=val
+                net_ops+=val
                 
-        return ops
+        return net_ops
