@@ -1,0 +1,15 @@
+# O(n) / O(1)
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        
+        dups = []
+        
+        for n in nums:
+            i = abs(n)-1
+            
+            if nums[i] < 0:
+                dups.append(abs(n))
+            else:
+                nums[i]*=-1
+            
+        return dups
