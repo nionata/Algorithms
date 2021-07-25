@@ -19,6 +19,22 @@ class Solution:
                 
         cache[s] = False
         return False
+        
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        return self.findSub(s, wordDict, {}, 0)
+    
+    def findSub(self, s, d, c, i):
+        if i == len(s):
+            return True
+        if i in c:
+            return c[i]
+        for w in d:
+            if s[i:i+len(w)] == w and self.findSub(s, d, c, i+len(w)):
+                c[i] = True
+                return True
+        c[i] = False
+        return False
                 
 # O(n^2) / O(n) - DP
 class Solution:
