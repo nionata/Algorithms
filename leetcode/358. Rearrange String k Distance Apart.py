@@ -1,8 +1,8 @@
 # Time: O(nlogn)
 # Space: O(num uniques)
 def arrange(chars, min_sep):
-    counts, heap = Counter(chars), []
-    for char, count in counts:
+    heap = []
+    for char, count in Counter(chars).items():
         heappush(heap, (-1 * count, char))
     out = []
     while len(heap):
