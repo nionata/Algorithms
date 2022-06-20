@@ -5,7 +5,7 @@ class Solution:
             for j in range(n):
                 if grid[i][j] == 1:
                     idx = len(counts)+2
-                    c = self.dfs(grid, copy, n, i, j, idx)
+                    c = self.dfs(grid, n, i, j, idx)
                     counts[idx] = c
         largest = max(counts.values() or [0])
         for i in range(n):
@@ -26,7 +26,7 @@ class Solution:
                     largest = max(largest, c+1)
         return largest
         
-    def dfs(self, grid: List[List[int]], copy: List[List[int]], n, i, j, idx) -> int:
+    def dfs(self, grid: List[List[int]], n, i, j, idx) -> int:
         c = 1
         grid[i][j] = idx
         for a, b in [(0,-1), (-1,0), (1,0), (0,1)]:
@@ -34,5 +34,5 @@ class Solution:
             in_bounds = 0 <= x < n and 0 <= y < n
             if not in_bounds or grid[x][y] != 1:
                 continue 
-            c += self.dfs(grid, copy, n, x, y, idx)
+            c += self.dfs(grid, n, x, y, idx)
         return c
