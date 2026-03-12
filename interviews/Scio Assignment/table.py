@@ -45,14 +45,10 @@ class ScioTable:
     def slice(self, columns):
         """Returns a new ScioTable instance which only has the passed in columns."""
         new_table = ScioTable(columns)
-        sel_col = []
-        for col in columns:
-            sel_col.append(self.columns[col][1])
-        for i in range(self.rows):
-            sliced_row = []
-            for j, col_vals in enumerate(sel_col):
-                sliced_row.append(col_vals[i])
-            new_table.insert_row(sliced_row)
+        for i, col in enumerate(new_table.column_names):
+            col_vals = self.columns[col][1]
+            new_table.columns[col] = (i, col_vals)
+        new_table.rows = self.rows
         return new_table
 
     def add_column(self, column):
@@ -78,8 +74,8 @@ class ScioTable:
         for i, col in enumerate(new_column_names):
             if col == column:
                 continue
-            old_col_val = new_columns[col]
-            new_columns[col] = (i, old_col_val[1])
+            col_val = new_columns[col][1]
+            new_columns[col] = (i, col_val)
         new_table.columns = new_columns
         new_table.rows = self.rows
         return new_table
